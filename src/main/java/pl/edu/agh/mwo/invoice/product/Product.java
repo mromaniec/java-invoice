@@ -1,7 +1,8 @@
 package pl.edu.agh.mwo.invoice.product;
 
 import java.math.BigDecimal;
-//   git token:   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
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public abstract class Product {
     private final String name;
@@ -9,6 +10,10 @@ public abstract class Product {
     private final BigDecimal price;
 
     private final BigDecimal taxPercent;
+
+    // DODAWANIE DATY
+    //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    //String date = sdf.format(new Date());
 
     protected Product(String name, BigDecimal price, BigDecimal tax) {
         if (name == null || name.isEmpty() ){

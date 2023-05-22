@@ -15,22 +15,45 @@ public class Invoice {
     }
 
     public void addProduct(Product product, Integer quantity) {
-        this.products.put(product, quantity);
-
+        //this.products.put(product, quantity);
         //for int i = 0; i <quantity; i++){    - jeśli pracowalibysmy na kolekcji
         //    products.add(product);
         // }
+
+        if (product == null || quantity <= 0){
+            throw new IllegalArgumentException("quantity must be greater than 0");
+        }
+        products.put(product, quantity);
+
     }
 
     public BigDecimal getSubtotal() {
-        return BigDecimal.ZERO;
+        BigDecimal subtotal = BigDecimal.ZERO;
+        for (Product product : products.keySet()) {
+            subtotal = subtotal.add(product.getPrice().multiply(new BigDecimal(products.get(product))));
+        }
+        return subtotal;
+
+       // return BigDecimal.ZERO;
     }
 
     public BigDecimal getTax() {
-        return BigDecimal.ZERO;
+        BigDecimal tax = new BigDecimal(0);
+        for (Product product : products.keySet()) {
+            tax = tax.add(product.getPrice().multiply(product.getTaxPercent()));
+        }
+        return tax;
+        // return BigDecimal.ZERO;
     }
 
     public BigDecimal getTotal() {
-        return BigDecimal.ZERO;
+        BigDecimal total = new BigDecimal(0);
+        for (Product product : products.keySet()) {
+            BigDecimal price = product.getPrice();
+            BigDecimal priceWithTax = price.add(price.multiply(product.getTaxPercent()));
+            total = total.add(priceWithTax.multiply(new BigDecimal(products.get(product))));
+        }
+        return total;
+        //return BigDecimal.ZERO;
     }
 }
